@@ -45,7 +45,7 @@ $SigninValdiation->signInValidation($_POST['email'],$_POST['password']);
                             <input type="password" id="password" name="password" placeholder="Password"  >
                             <span class="error"> <?php if (isset($SigninValdiation->passErr)) {echo "* " . $SigninValdiation->passErr;}?></span>
                             <button   type="submet" class="log_in">Log in</button><br><br>
-                            <p>Dont have an account?<a href="./SignUp.php"> Sign up</a></p>
+                            <p>Dont have an account?<a href="./registration.php"> Sign up</a></p>
                       </form><br><br>
 
   </div>

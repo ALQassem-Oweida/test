@@ -1,4 +1,12 @@
 <?php include "./inc/hedare.php";
+if(isset($_POST['sub'])){
+
+    if (!isset($_SESSION['email'])){header("Location:./Login_form.php");} 
+else if (!isset($_SESSION['cart']) ) {header("Location:./all.php");}else{
+    header("Location:./checkout.php");
+}
+}
+
 
 $sum=0;
 
@@ -126,9 +134,8 @@ if (isset($_GET['del'])) {
                         </div>
 
 
-
                         
-                                <a href="./checkout.php" class="btn-add-to-cart" >Proceed To Checkout</a>
+                               <form action="" method="POST"> <button  type="submit" name="sub" class="btn-add-to-cart" >Proceed To Checkout</button></form>
                     </div>
                 </div>
             </div>
@@ -154,3 +161,5 @@ if (isset($_GET['del'])) {
 
 </html>
 
+
+<?php print_r($_SESSION);

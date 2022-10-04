@@ -1,3 +1,7 @@
+
+
+
+
 <?php 
 
 session_start();
@@ -47,6 +51,8 @@ class SigninUser extends Dbconn {
                     $_SESSION['lastname'] = $row['last_name'];
                     $_SESSION['userType'] = $row['user_type'];
                     $_SESSION['email'] = $row['user_email'];
+                    $_SESSION['user_phone'] = $row['user_phone'];
+                    $_SESSION['address'] = $row['address'];
                     header("location:./index.php");
                 }
     
@@ -57,6 +63,8 @@ class SigninUser extends Dbconn {
                     $_SESSION['lastname'] = $row['last_name'];
                     $_SESSION['userType'] = $row['user_type'];
                     $_SESSION['email'] = $row['user_email'];
+                    $_SESSION['user_phone'] = $row['user_phone'];
+                    $_SESSION['address'] = $row['address'];
                
     
                     header("Location:./admin/dashboard.php");

@@ -1,5 +1,13 @@
 <?php include "./inc/hedare.php";?>
 <?php include "./lib/Databaseconfig.php" ?>
+
+<?php 
+
+
+
+
+?>
+
 <?php $counter=count($_SESSION['cart']);?>
 <head>
     <!--=== Favicon ===-->
@@ -29,8 +37,7 @@
 
 <?php 
 
-if (!isset( $_SESSION['email'])){header("Location:./Login.php");} 
-if (!isset($_SESSION['cart']) ) {header("location: ./all.php");}
+
 if(isset($_SESSION['email'])){
     $u_id = mysqli_real_escape_string($conn,$_SESSION['id'] );
     $query = "SELECT * FROM users WHERE user_id='$u_id' ";
@@ -41,25 +48,25 @@ if(isset($_SESSION['email'])){
         // if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         
-if (isset($_POST['order_place'])) {
-            $u_id =$_SESSION['id'];
-            $u_name=$_SESSION['firstname'];
-            $Fname = $_POST['Fname'];
-            $Lname = $_POST['Lname'];
-            $fullName=$Fname.' '.$Lname;
-            $email = $_POST['email'];
-            $Staddress = $_POST['Staddress'];
-            $phone = $_POST['phone'];
-            if (isset($_SESSION["cart"])) {
+// if (isset($_POST['order_place'])) {
+//             $u_id =$_SESSION['id'];
+//             $u_name=$_SESSION['firstname'];
+//             $Fname = $_POST['Fname'];
+//             $Lname = $_POST['Lname'];
+//             $fullName=$Fname.' '.$Lname;
+//             $email = $_POST['email'];
+//             $Staddress = $_POST['Staddress'];
+//             $phone = $_POST['phone'];
+//             if (isset($_SESSION["cart"])) {
             
-            foreach ($_SESSION['cart'] as $key => $value) { 
-               $qun=$value['quantity'];
-               $id=$value['product_id'];
+//             foreach ($_SESSION['cart'] as $key => $value) { 
+//                $qun=$value['quantity'];
+//                $id=$value['product_id'];
             
-            $addData="INSERT INTO orders(productId,customer_id,quantity,ordered_by,order_address) 
-            VALUES('$id','$u_id','$qun','$fullName','$Staddress')";
-             $conn->query($addData);
-            }
+//             $addData="INSERT INTO orders(productId,customer_id,quantity,ordered_by,order_address) 
+//             VALUES('$id','$u_id','$qun','$fullName','$Staddress')";
+//              $conn->query($addData);
+//             }
             
             // if($conn->query($addData)){
             //     echo "<script>alert('Order has been placed successfully')</script>";
@@ -68,7 +75,7 @@ if (isset($_POST['order_place'])) {
             
             
                 
-            }}
+            // }}
 
 
 
@@ -98,53 +105,44 @@ if (isset($_POST['order_place'])) {
                     <div class="billing-form-wrap">
 
 
-                        <!-- <form action="
-                        <?php 
-                        
-                    // echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                    ?>
-                        " method="GET"> -->
-                        <form action="" method="post">
+                        <form action="" method="GET">
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="single-input-item">
                                         <label for="f_name" class="required">First Name</label>
-                                        <input name="Fname" type="text" id="f_name" placeholder="First Name" required/>
+                                        <input name="Fname" type="text" id="f_name" placeholder="First Name" value="<?php echo $_SESSION['firstname']?>"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="single-input-item">
                                         <label for="l_name" class="required">Last Name</label>
-                                        <input name="Lname" type="text" id="l_name" placeholder="Last Name" required/>
+                                        <input name="Lname" type="text" id="l_name" placeholder="Last Name"  value="<?php echo $_SESSION['lastname']?>"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="single-input-item">
                                 <label for="email" class="required">Email Address</label>
-                                <input name="email" type="email" id="email" placeholder="Email Address" required/>
+                                <input name="email" type="email" id="email" placeholder="Email Address" value="<?php echo $_SESSION['email']?>"/>
                             </div>
 
 
 
                             <div class="single-input-item">
                                 <label for="street-address" class="required">Street address</label>
-                                <input name="Staddress" type="text" id="street-address" placeholder="Street address Line 1" required/>
+                                <input name="Staddress" type="text" id="street-address" placeholder="Street address Line 1" value="<?php echo $_SESSION['address']?>"/>
                             </div>
 
                        
 
                             
 
-                       
-
-                       
 
                             <div class="single-input-item">
                                 <label for="phone">Phone</label>
-                                <input name="phone" type="text" id="phone" placeholder="Phone" required/>
+                                <input name="phone" type="text" id="phone" placeholder="Phone"  value="<?php echo $_SESSION['user_phone']?>"/>
                             </div>
 
               
@@ -168,7 +166,7 @@ if (isset($_POST['order_place'])) {
                                 <thead>
                                 <tr>
                                     <th>Items in cart</th>
-                                    <th><?php echo $counter?></th>
+                                    <th>( <?php echo $counter?> ) Item</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -220,16 +218,17 @@ if (isset($_POST['order_place'])) {
 <?php
 
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if (isset($_SESSION["cart"])&&$_SERVER["REQUEST_METHOD"] == "GET") {
+
+
 $u_id =$_SESSION['id'];
-$u_name=$_SESSION['firstname'];
-$Fname = $_POST['Fname'];
-$Lname = $_POST['Lname'];
-$fullName=$Fname.' '.$Lname;
-$email = $_POST['email'];
-$Staddress = $_POST['Staddress'];
-$phone = $_POST['phone'];
-if (isset($_SESSION["cart"])) {
+$F_name=$_SESSION['firstname'];
+$L_name=$_SESSION['lastname'];
+$fullName=$F_name.' '.$L_name;
+$email =$_SESSION['email'];
+$Staddress = $_SESSION['address'];
+$phone = $_SESSION['user_phone'];
+
 
 foreach ($_SESSION['cart'] as $key => $value) { 
    $qun=$value['quantity'];
@@ -239,15 +238,22 @@ $addData="INSERT INTO orders(productId,customer_id,quantity,ordered_by,order_add
 VALUES('$id','$u_id','$qun','$fullName','$Staddress')";
  $conn->query($addData);
 }
+// echo "<script>alert('Order has been placed successfully')</script>";
 
-if($conn->query($addData)){
-	echo "<script>alert('Order has been placed successfully')</script>";
-    header("Location:./all.php");
-	unset ($_SESSION["cart"]);}
-
+// if($conn->query($addData)){
+// 	echo "<script>alert('Order has been placed successfully')</script>";
+//   
+// }
+header("Location:./all.php");
+	// unset ($_SESSION["cart"]);
 
 	
-}}
+}
+
+
+
+
+
  ?>
 
 
@@ -278,3 +284,5 @@ if($conn->query($addData)){
 </body>
 
 </html>
+
+
